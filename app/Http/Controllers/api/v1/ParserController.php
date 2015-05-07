@@ -33,7 +33,10 @@ class ParserController extends Controller {
 	 * @return Response
 	 */
 	public function create() {
-		return response()->view('parsers.create');
+
+		$fields = $this->file->process(\Input::file('file_to_upload'));
+
+		return response()->json($fields);
 	}
 
 	/**
@@ -55,9 +58,8 @@ class ParserController extends Controller {
 	public function show($id) {
 		$parser = $this->parser->getById($id);
 
-		return response()
-			->view('parsers.show')
-			->with('parser', $parser);
+
+		return response()->json(['parser' => $parser]);
 	}
 
 	/**

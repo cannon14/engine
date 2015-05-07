@@ -1,7 +1,19 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: risheebhatt
- * Date: 5/6/15
- * Time: 10:28 AM
- */
+@extends('app')
+
+@section('content')
+    <ol class="breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li><a href="/parsers">Parsers</a></li>
+      <li class="active">Create Parser</li>
+    </ol>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+@endsection

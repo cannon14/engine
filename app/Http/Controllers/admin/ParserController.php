@@ -3,6 +3,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Repositories\FileRepository;
 use App\Repositories\ParserRepository;
 
 use Illuminate\Http\Request;
@@ -10,9 +11,11 @@ use Illuminate\Http\Request;
 class ParserController extends Controller {
 
 	private $parser;
+	private $file;
 
-	function __construct(ParserRepository $parser) {
+	function __construct(ParserRepository $parser, FileRepository $file) {
 		$this->parser = $parser;
+		$this->file = $file;
 	}
 
 	/**
@@ -32,7 +35,8 @@ class ParserController extends Controller {
 	 * @return Response
 	 */
 	public function create() {
-		return view('parsers.create');
+
+		return redirect('parsers.create');
 	}
 
 	/**
@@ -41,24 +45,7 @@ class ParserController extends Controller {
 	 * @return Response
 	 */
 	public function store() {
-		//Get the uploaded file.
-		$file = \Input::file('file_to_upload');
-		$fileName = $file->getClientOriginalName();
-		$fileSize = $file->getClientSize();
-		$fileMimeType = $file->getClientMimeType();
-
-		//Move the file from temporary storage to permanent storage
-		$file->move(storage_path().'/imports/',$fileName);
-		//Load the file for reading.
-		$reader = \Excel::load(storage_path().'/imports/'.$fileName);
-		// Getting all results
-		$results = $reader->all();
-		//Array to hold all column names.
-		$fields = [];
-		//Loop through results and load all the column names into fields array.
-		foreach($results[0] as $key => $value) {
-			array_push($fields, $key);
-		}
+		$this->file->process(\Input::file('file_to_upload'));
 
 		return redirect("parsers");
 	}
@@ -73,9 +60,9 @@ class ParserController extends Controller {
 	public function show($id) {
 		$parser = $this->parser->getById($id);
 
-		return response()
-			->view('parsers.show')
-			->with('parser', $parser);
+		$fields = json_decode($parser->parser_fields);
+
+		return view('parsers.show', ['parser' => $parser, 'fields'=>$fields]);
 	}
 
 	/**
@@ -88,9 +75,7 @@ class ParserController extends Controller {
 	public function edit($id) {
 		$parser = $this->parser->getById($id);
 
-		return response()
-			->view('parsers.edit')
-			->with('parser', $parser);
+		return view('parsers.edit', ['parser', $parser]);
 	}
 
 	/**
@@ -113,6 +98,8 @@ class ParserController extends Controller {
 	 */
 	public function destroy($id) {
 		$this->parser->delete($id);
+
+		return redirect('parsers');
 	}
 
 }

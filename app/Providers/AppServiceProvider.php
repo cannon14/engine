@@ -29,7 +29,8 @@ class AppServiceProvider extends ServiceProvider {
 			'Illuminate\Contracts\Auth\Registrar',
 			'App\Services\Registrar',
 			'App\Repositories\ParserRepository',
-			'App\Repositories\UserRepository'
+			'App\Repositories\UserRepository',
+			'App\Repositories\FileRepository'
 		);
 	}
 

@@ -19,7 +19,9 @@ class ParserRepository implements RepositoryInterface {
 	}
 
 	public function getById($id) {
-		// TODO: Implement getById() method.
+		$parser = Parser::find($id);
+
+		return $parser;
 	}
 
 	public function create() {
@@ -31,6 +33,6 @@ class ParserRepository implements RepositoryInterface {
 	}
 
 	public function delete($id) {
-		// TODO: Implement delete() method.
+		return Parser::find($id)->delete();
 	}
 }
