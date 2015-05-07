@@ -23,7 +23,7 @@ class ParserController extends Controller {
 	public function index() {
 		$parsers = $this->parser->all();
 
-        return view('parsers.index', ['parsers' => $parsers]);
+		return view('parsers.index', ['parsers' => $parsers]);
 	}
 
 	/**
@@ -41,26 +41,26 @@ class ParserController extends Controller {
 	 * @return Response
 	 */
 	public function store() {
-        //Get the uploaded file.
-        $file = \Input::file('file_to_upload');
-        $fileName = $file->getClientOriginalName();
-        $fileSize = $file->getClientSize();
-        $fileMimeType = $file->getClientMimeType();
+		//Get the uploaded file.
+		$file = \Input::file('file_to_upload');
+		$fileName = $file->getClientOriginalName();
+		$fileSize = $file->getClientSize();
+		$fileMimeType = $file->getClientMimeType();
 
-        //Move the file from temporary storage to permanent storage
-        $file->move(storage_path().'/imports/',$fileName);
-        //Load the file for reading.
-        $reader = \Excel::load(storage_path().'/imports/'.$fileName);
-        // Getting all results
-        $results = $reader->all();
-        //Array to hold all column names.
-        $fields = [];
-        //Loop through results and load all the column names into fields array.
-        foreach($results[0] as $key => $value) {
-            array_push($fields, $key);
-        }
+		//Move the file from temporary storage to permanent storage
+		$file->move(storage_path().'/imports/',$fileName);
+		//Load the file for reading.
+		$reader = \Excel::load(storage_path().'/imports/'.$fileName);
+		// Getting all results
+		$results = $reader->all();
+		//Array to hold all column names.
+		$fields = [];
+		//Loop through results and load all the column names into fields array.
+		foreach($results[0] as $key => $value) {
+			array_push($fields, $key);
+		}
 
-        return redirect("parsers");
+		return redirect("parsers");
 	}
 
 	/**

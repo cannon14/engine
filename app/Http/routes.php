@@ -14,7 +14,7 @@
 // Admin Routes
 Route::group(array('namespace' => 'admin'), function() {
 	Route::resource('users', 'UserController');
-    Route::resource('parsers', 'ParserController');
+	Route::resource('parsers', 'ParserController');
 });
 
 // API Routes
