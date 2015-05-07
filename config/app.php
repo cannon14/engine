@@ -135,6 +135,8 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
+		'Maatwebsite\Excel\ExcelServiceProvider',
+		'Collective\Html\HtmlServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -192,7 +194,9 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
-
+		'Excel'     => 'Maatwebsite\Excel\Facades\Excel',
+		'Form'      => 'Collective\Html\FormFacade',
+		'Html'      => 'Collective\Html\HtmlFacade',
 	],
 
 ];

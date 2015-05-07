@@ -11,11 +11,20 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+// Admin Routes
+Route::group(array('namespace' => 'admin'), function() {
+	Route::resource('users', 'UserController');
+    Route::resource('parsers', 'ParserController');
+});
 
-Route::get('home', 'HomeController@index');
+// API Routes
+Route::group(array('prefix' => 'api/v1', 'namespace' => 'api\v1'), function() {
+	Route::resource('parsers', 'ParserController');
+});
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::get('/', 'HomeController@index');
